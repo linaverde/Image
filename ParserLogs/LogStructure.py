@@ -42,7 +42,7 @@ class LogStruct:
         self.browser = browser
         self.__formatdate(datetime)
 
-    def getlog(self):
+    def __str__(self):
         delim = '<'
         return "{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}".format(delim, ip, user, date, time, zone,
                                                                                    request, response, bytesSent,
