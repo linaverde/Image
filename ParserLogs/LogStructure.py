@@ -17,19 +17,19 @@ class LogStruct:
         return months[monthname]
 
     def __formatdate(self, datetime):
-        day = datetime[:3]
-        month = ''
-        datetime = datetime[3:]
-        for i in datetime:
-            if i != '/':
-                month += i
-            else:
-                datetime = datetime[:datetime.find(i)]
+        slash = datetime.find('/')
+        day = datetime[:slash]
+        datetime = datetime[slash + 1:]
+        slash = datetime.find('/')
+        month = datetime[:slash]
+        datetime = datetime[slash + 1:]
         month = self.__getmonths(month)
-        year = datetime[:4]
-        datetime = datetime[5:]
-        self.time = datetime[:7]
-        self.zone = int(datetime[9:])
+        twopoint = datetime.find(':')
+        year = datetime[:twopoint]
+        datetime = datetime[twopoint + 1:]
+        space = datetime.find(' ')
+        self.time = datetime[: space]
+        self.zone = int(datetime[space + 1:])
         self.date = year + '-' + month + '-' + day
 
     def __init__(self, ip, user, datetime, request, response, bytesSent, referer, browser):
@@ -43,7 +43,10 @@ class LogStruct:
         self.__formatdate(datetime)
 
     def __str__(self):
-        delim = '<'
-        return "{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}".format(delim, ip, user, date, time, zone,
-                                                                                   request, response, bytesSent,
-                                                                                   referer, browser)
+        delim = '|'
+        return "{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}\n".format(delim, self.ip, self.user,
+                                                                                     self.date,
+                                                                                     self.time, self.zone,
+                                                                                     self.request, self.response,
+                                                                                     self.bytesSent,
+                                                                                     self.referer, self.browser)
