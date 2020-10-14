@@ -1,5 +1,8 @@
 class LogStruct:
+    '''class log nginx or apache server structure'''
+
     def __getmonths(self, monthname):
+        '''return number of month'''
         months = {
             "Jan": "01",
             "Feb": "02",
@@ -17,6 +20,7 @@ class LogStruct:
         return months[monthname]
 
     def __formatdate(self, datetime):
+        '''return list with parsed time,zone,date'''
         slash = datetime.find('/')
         day = datetime[:slash]
         datetime = datetime[slash + 1:]
@@ -28,9 +32,10 @@ class LogStruct:
         year = datetime[:twopoint]
         datetime = datetime[twopoint + 1:]
         space = datetime.find(' ')
-        self.time = datetime[: space]
-        self.zone = int(datetime[space + 1:])
-        self.date = year + '-' + month + '-' + day
+        time = datetime[: space]
+        zone = int(datetime[space + 1:])
+        date = year + '-' + month + '-' + day
+        return [time, zone, date]
 
     def __init__(self, ip, user, datetime, request, response, bytesSent, referer, browser):
         self.ip = ip
@@ -40,7 +45,10 @@ class LogStruct:
         self.bytesSent = bytesSent
         self.referer = referer
         self.browser = browser
-        self.__formatdate(datetime)
+        resdatetime = self.__formatdate(datetime)
+        self.time = resdatetime[0]
+        self.zone = resdatetime[1]
+        self.date = resdatetime[2]
 
     def __str__(self):
         delim = '|'
