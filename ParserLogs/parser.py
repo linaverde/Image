@@ -4,11 +4,14 @@ from ParserLogs.filter import Filer
 
 
 class Parser:
+    '''class for parsing nginx or apache logs to logstructure'''
+
     def __init__(self):
         self.NUM_FIELDS = 9
         self.filter = Filer()
 
     def parsefile(self, listlogs):
+        '''return list with list of corrected and filtered logs and list of incorrect logs'''
         pattern = re.compile(
             "^([\\d.]+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(.+?)\" (\\d{3}) (\\d+) \"([^\"]+)\" \"([^\"]+)\"")
         parsedlogs = []
