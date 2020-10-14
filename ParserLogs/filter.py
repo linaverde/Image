@@ -1,4 +1,4 @@
-from ParserLogs.LogStructure import LogStruct
+from ParserLogs.logstructure import LogStruct
 import re
 
 
