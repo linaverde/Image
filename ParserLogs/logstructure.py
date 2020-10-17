@@ -50,6 +50,24 @@ class LogStruct:
         self.zone = resdatetime[1]
         self.date = resdatetime[2]
 
+    def __len__(self):
+        return 10
+
+    def __getitem__(self, item):
+        nowlist = []
+        nowlist.append(self.ip)
+        nowlist.append(self.user)
+        nowlist.append(self.date)
+        nowlist.append(self.time)
+        nowlist.append(self.zone)
+        nowlist.append(self.request)
+        nowlist.append(self.response)
+        nowlist.append(self.bytesSent)
+        nowlist.append(self.referer)
+        nowlist.append(self.browser)
+
+        return nowlist[item]
+
     def __str__(self):
         delim = '|'
         return "{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}\n".format(delim, self.ip, self.user,
